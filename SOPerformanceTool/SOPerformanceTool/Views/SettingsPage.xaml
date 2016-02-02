@@ -72,7 +72,7 @@
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}" OffContent="Dark theme"
                                       OnContent="Light theme"
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />-->
-                        <TextBox x:Name="BusyTextTextBox" Width="200" Margin="0,12,0,0"
+                        <!--<TextBox x:Name="BusyTextTextBox" Width="200" Margin="0,12,0,0"
                                  HorizontalAlignment="Left" Header="Busy text"
                                  RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -87,7 +87,7 @@
                                     </Behaviors:TimeoutAction>
                                 </Core:EventTriggerBehavior>
                             </Interactivity:Interaction.Behaviors>
-                        </Button>
+                        </Button>-->
                     </RelativePanel>
                 </ScrollViewer>
             </PivotItem>

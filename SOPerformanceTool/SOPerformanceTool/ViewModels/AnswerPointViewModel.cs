@@ -3,6 +3,7 @@ using SOPerformanceTool.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Template10.Mvvm;
@@ -25,6 +26,22 @@ namespace SOPerformanceTool.ViewModels
 
         string _DateRangeInfo = string.Empty;
         public string DateRangeInfo { get { return _DateRangeInfo; } set { Set(ref _DateRangeInfo, value); } }
+
+        private string _BusyText = "Please wait...";
+        public string BusyText
+        {
+            get { return _BusyText; }
+            set { Set(ref _BusyText, value); }
+        }
+        public void ShowBusy()
+        {
+            Views.Shell.SetBusy(true, _BusyText);
+        }
+
+        public void HideBusy()
+        {
+            Views.Shell.SetBusy(false);
+        }
 
         public AnswerPointViewModel()
         {
@@ -53,19 +70,29 @@ namespace SOPerformanceTool.ViewModels
             }
             var task = new Task(new Action(async () =>
             {
-                HttpClientHandler handler = new HttpClientHandler();
-                handler.UseDefaultCredentials = true;
-                using (var client = new HttpClient(handler))
+                ShowBusy();
+                try
                 {
-                    var url = string.Format(APIBase, "opdata", StartDateValue, EndDateValue);
-                    var response = await client.GetStringAsync(url);
-                    // Parse JSON response.
-                    var data = JsonConvert.DeserializeObject<ObservableCollection<AnswerPointModel>>(response);
-                    foreach (var item in data)
+                    HttpClientHandler handler = new HttpClientHandler();
+                    handler.UseDefaultCredentials = true;
+                    using (var client = new HttpClient(handler))
                     {
-                        AnswerPointData.Add(new AnswerPointModel() { Alias = item.Alias, Vote = item.Vote, Answers = item.Answers, Accepted = item.Accepted, Points = item.Points });
+                        var url = string.Format(APIBase, "opdata", StartDateValue, EndDateValue);
+                        var response = await client.GetStringAsync(url);
+                        // Parse JSON response.
+                        var data = JsonConvert.DeserializeObject<ObservableCollection<AnswerPointModel>>(response);
+                        foreach (var item in data)
+                        {
+                            AnswerPointData.Add(new AnswerPointModel() { Alias = item.Alias, Vote = item.Vote, Answers = item.Answers, Accepted = item.Accepted, Points = item.Points });
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                await Task.Delay(500);
+                HideBusy();
             }));
             task.RunSynchronously();
             //return base.OnNavigatedToAsync(parameter, mode, state);
