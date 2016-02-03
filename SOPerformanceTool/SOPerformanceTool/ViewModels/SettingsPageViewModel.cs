@@ -56,7 +56,7 @@ namespace SOPerformanceTool.ViewModels
 
         public string DisplayName => Windows.ApplicationModel.Package.Current.DisplayName;
 
-        public string Publisher => "Franklin Chen";//Windows.ApplicationModel.Package.Current.PublisherDisplayName;
+        public string Publisher => Windows.ApplicationModel.Package.Current.PublisherDisplayName;
 
         public string Version
         {
