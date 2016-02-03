@@ -14,8 +14,7 @@ namespace SOPerformanceTool.ViewModels
 {
     public class AnswerPointViewModel : ViewModelBase
     {
-        private string APIBase = "http://localhost:34615/Api/performance/{0}?startdate={1}&enddate={2}";
-
+        private string APIBase = "/Api/performance/{0}?startdate={1}&enddate={2}";
         public ObservableCollection<AnswerPointModel> AnswerPointData { get; set; }
 
         string _StartDateValue = string.Empty;
@@ -46,6 +45,17 @@ namespace SOPerformanceTool.ViewModels
         public AnswerPointViewModel()
         {
             AnswerPointData = new ObservableCollection<AnswerPointModel>();
+            
+            var resources = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            var baseurl = resources.GetString("APIBase");
+            if (!String.IsNullOrEmpty(baseurl))
+            {
+                APIBase = baseurl + APIBase;
+            }
+            else
+            {
+                throw new Exception("Can't find APIBase url");
+            }
         }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)

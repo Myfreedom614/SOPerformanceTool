@@ -14,7 +14,7 @@ namespace SOPerformanceTool.ViewModels
 {
     public class UTPageViewModel : ViewModelBase
     {
-        private string APIBase = "http://localhost:34615/Api/performance/{0}?startdate={1}&enddate={2}";
+        private string APIBase = "/Api/performance/{0}?startdate={1}&enddate={2}";
         public ObservableCollection<UTModel> UTData { get; set; }
 
         string _StartDateValue = string.Empty;
@@ -36,6 +36,17 @@ namespace SOPerformanceTool.ViewModels
         public UTPageViewModel()
         {
             UTData = new ObservableCollection<UTModel>();
+
+            var resources = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            var baseurl = resources.GetString("APIBase");
+            if (!String.IsNullOrEmpty(baseurl))
+            {
+                APIBase = baseurl + APIBase;
+            }
+            else
+            {
+                throw new Exception("Can't find APIBase url");
+            }
         }
 
         public void ShowBusy()
