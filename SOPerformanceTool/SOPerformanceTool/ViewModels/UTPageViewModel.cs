@@ -63,7 +63,7 @@ namespace SOPerformanceTool.ViewModels
         {
             Views.Shell.SetBusy(false);
         }
-
+        
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.ContainsKey(nameof(StartDateValue)))
@@ -80,6 +80,7 @@ namespace SOPerformanceTool.ViewModels
                 //Value = parameter?.ToString();
                 List<Object> paras = parameter as List<Object>;
                 Product = paras[0].ToString();
+
                 StartDateValue = Convert.ToDateTime(paras[1]).ToString("MM/dd/yyyy");
                 EndDateValue = Convert.ToDateTime(paras[2]).ToString("MM/dd/yyyy");
 
@@ -110,6 +111,8 @@ namespace SOPerformanceTool.ViewModels
                 }
                 await Task.Delay(500);
                 HideBusy();
+
+                //if (!string.IsNullOrEmpty(Product)) Shell.SetCurrentProduct(Product);
             }));
             task.RunSynchronously();
             //return base.OnNavigatedToAsync(parameter, mode, state);

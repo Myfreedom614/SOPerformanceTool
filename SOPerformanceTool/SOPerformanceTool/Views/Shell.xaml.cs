@@ -1,9 +1,8 @@
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace SOPerformanceTool.Views
@@ -45,6 +44,32 @@ namespace SOPerformanceTool.Views
                 Instance.BusyView.BusyText = text;
                 Instance.ModalContainer.IsModal = Instance.BusyView.IsBusy = busy;
             });
+        }
+
+        public static void SetCurrentProduct(string product)
+        {
+            ObservableCollection<HamburgerButtonInfo> pbs = Shell.HamburgerMenu.PrimaryButtons as ObservableCollection<HamburgerButtonInfo>;
+            if (pbs != null)
+            {
+                foreach (var pb in pbs)
+                {
+                    var content = ((HamburgerButtonInfo)pb).Content;
+                    if (content != null)
+                    {
+                        var tb = ((Windows.UI.Xaml.Controls.Panel)content).Children.FirstOrDefault(x => x is Windows.UI.Xaml.Controls.TextBlock);
+                        if (tb != null)
+                        {
+                            if (((Windows.UI.Xaml.Controls.TextBlock)tb).Tag.ToString() == product)
+                            {
+                                System.Diagnostics.Debug.WriteLine("old-"+pb.IsChecked);
+                                pb.IsChecked = true;
+                                System.Diagnostics.Debug.WriteLine("new-" + pb.IsChecked);
+                            }
+                        }
+                    }
+                }
+
+            }
         }
     }
 }
