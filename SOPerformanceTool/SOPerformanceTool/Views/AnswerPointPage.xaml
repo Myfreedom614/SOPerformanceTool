@@ -51,7 +51,7 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader Frame="{x:Bind Frame}" Text="Answer/Points Performance">
+        <controls:PageHeader Frame="{x:Bind Frame}" Text="{x:Bind ViewModel.PageHeader}">
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>

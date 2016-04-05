@@ -18,10 +18,16 @@
 
                 <Controls:HamburgerMenu.PrimaryButtons>
                     <!--  mainpage button  -->
+                    <Controls:HamburgerButtonInfo x:Name="uwp" ClearHistory="True" PageType="views:MainPage">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48" Height="48" Symbol="Favorite" />
+                            <TextBlock Margin="12,0,0,0" Tag="uwp" VerticalAlignment="Center" Text="UWP" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
                     <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                         <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Width="48" Height="48" Symbol="Home" />
-                            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
+                            <SymbolIcon Width="48" Height="48" Symbol="Favorite" />
+                            <TextBlock Margin="12,0,0,0" Tag="o365" VerticalAlignment="Center" Text="Office365" />
                         </StackPanel>
                     </Controls:HamburgerButtonInfo>
                 </Controls:HamburgerMenu.PrimaryButtons>

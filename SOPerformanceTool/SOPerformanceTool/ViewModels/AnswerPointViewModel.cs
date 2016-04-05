@@ -17,6 +17,11 @@ namespace SOPerformanceTool.ViewModels
         private string APIBase = "/Api/performance/{0}?product={1}&startdate={2}&enddate={3}";
         public ObservableCollection<AnswerPointModel> AnswerPointData { get; set; }
 
+        public string PageHeader { get { return _Product.ToUpper() + " Answer/Points Performance"; } }
+
+        string _Product = string.Empty;
+        public string Product { get { return _Product; } set { Set(ref _Product, value); } }
+
         string _StartDateValue = string.Empty;
         public string StartDateValue { get { return _StartDateValue; } set { Set(ref _StartDateValue, value); } }
 
@@ -72,9 +77,10 @@ namespace SOPerformanceTool.ViewModels
             else
             {
                 //Value = parameter?.ToString();
-                List<DateTime> paras = parameter as List<DateTime>;
-                StartDateValue = Convert.ToDateTime(paras[0]).ToString("MM/dd/yyyy");
-                EndDateValue = Convert.ToDateTime(paras[1]).ToString("MM/dd/yyyy");
+                List<Object> paras = parameter as List<Object>;
+                Product = paras[0].ToString();
+                StartDateValue = Convert.ToDateTime(paras[1]).ToString("MM/dd/yyyy");
+                EndDateValue = Convert.ToDateTime(paras[2]).ToString("MM/dd/yyyy");
 
                 DateRangeInfo = string.Format("Showing data from {0} - {1}", StartDateValue, EndDateValue);
             }
@@ -87,7 +93,7 @@ namespace SOPerformanceTool.ViewModels
                     handler.UseDefaultCredentials = true;
                     using (var client = new HttpClient(handler))
                     {
-                        var url = string.Format(APIBase, "opdata", "uwp", StartDateValue, EndDateValue);
+                        var url = string.Format(APIBase, "opdata", Product, StartDateValue, EndDateValue);
                         var response = await client.GetStringAsync(url);
                         // Parse JSON response.
                         var data = JsonConvert.DeserializeObject<ObservableCollection<AnswerPointModel>>(response);

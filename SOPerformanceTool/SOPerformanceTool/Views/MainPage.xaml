@@ -66,8 +66,12 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
+            <!--  Header Row  -->
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <!--  Content Row  -->
+            <RowDefinition Height="*" />
+            <!--  CommandBar Row  -->
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  page header  -->
@@ -110,7 +114,19 @@
             <Button x:Name="btnOpData" Margin="12, 10"
                     Click="{x:Bind ViewModel.GotoAnswerPointPage}" Content="Answer/Points" />
         </RelativePanel>
-        
+        <Grid x:Name="BottomBar" Grid.Row="2">
+            <CommandBar ClosedDisplayMode="Compact">
+                <AppBarButton Icon="Find" Label="Query">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Top">
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="0" Text="UT Minutes" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="1" Text="Answer/Points" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton Click="{x:Bind ViewModel.TogglePane}" Icon="OpenPane" Label="Open Panel" />
+            </CommandBar>
+        </Grid>
     </Grid>
 </Page>
 

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 using System;
+using SOPerformanceTool.Views;
+using SOPerformanceTool.Models;
+using Template10.Controls;
 
 namespace SOPerformanceTool.ViewModels
 {
@@ -23,6 +26,51 @@ namespace SOPerformanceTool.ViewModels
                 StartDateValue = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 EndDateValue = DateTime.Now;
             }
+        }
+
+        #region Commands
+        DelegateCommand<int> _SetPaneCommand;
+        public DelegateCommand<int> SetPaneCommand
+           => _SetPaneCommand ?? (_SetPaneCommand = new DelegateCommand<int>(SetPaneCommandExecute));
+        void SetPaneCommandExecute(int param)
+        {
+            var qm = (QueryMode)param;
+
+            switch (qm)
+            {
+                case QueryMode.UT:
+                    //System.Diagnostics.Debug.WriteLine("UT");
+                    GotoUTPage();
+                    break;
+                case QueryMode.AnswerPoint:
+                    //System.Diagnostics.Debug.WriteLine("AnswerPoint");
+                    GotoAnswerPointPage();
+                    break;
+            }
+        }
+        #endregion
+
+        public void TogglePane()
+        {
+            Shell.HamburgerMenu.IsOpen = !Shell.HamburgerMenu.IsOpen;
+        }
+
+        public string GetCurrentProduct()
+        {
+            var pb = Shell.HamburgerMenu.PrimaryButtons.FirstOrDefault(x => x.IsChecked == true);
+            if (pb!=null)
+            {
+                var content = ((HamburgerButtonInfo)pb).Content;
+                if (content != null)
+                {
+                    var tb = ((Windows.UI.Xaml.Controls.Panel)content).Children.FirstOrDefault(x=>x is Windows.UI.Xaml.Controls.TextBlock);
+                    if (tb != null)
+                    {
+                        return ((Windows.UI.Xaml.Controls.TextBlock)tb).Tag.ToString();
+                    }
+                }
+            }
+            return null;
         }
 
         //string _Value = string.Empty;
@@ -63,14 +111,11 @@ namespace SOPerformanceTool.ViewModels
             return Task.CompletedTask;
         }
 
-        //public void GotoDetailsPage() =>
-        //    NavigationService.Navigate(typeof(Views.DetailPage), Value);
-
         public void GotoUTPage() =>
-            NavigationService.Navigate(typeof(Views.UTPage), new List<DateTime>() { StartDateValue, EndDateValue });
+            NavigationService.Navigate(typeof(Views.UTPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
 
         public void GotoAnswerPointPage() =>
-            NavigationService.Navigate(typeof(Views.AnswerPointPage), new List<DateTime>() { StartDateValue, EndDateValue });
+            NavigationService.Navigate(typeof(Views.AnswerPointPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
 
         public void GotoSettings() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 0);
