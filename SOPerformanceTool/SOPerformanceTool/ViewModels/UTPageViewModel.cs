@@ -14,7 +14,7 @@ namespace SOPerformanceTool.ViewModels
 {
     public class UTPageViewModel : ViewModelBase
     {
-        private string APIBase = "/Api/performance/{0}?startdate={1}&enddate={2}";
+        private string APIBase = "/Api/performance/{0}?product={1}&startdate={2}&enddate={3}";
         public ObservableCollection<UTModel> UTData { get; set; }
 
         string _StartDateValue = string.Empty;
@@ -88,7 +88,7 @@ namespace SOPerformanceTool.ViewModels
                     handler.UseDefaultCredentials = true;
                     using (var client = new HttpClient(handler))
                     {
-                        var url = string.Format(APIBase, "ut", StartDateValue, EndDateValue);
+                        var url = string.Format(APIBase, "ut", "uwp", StartDateValue, EndDateValue);
                         var response = await client.GetStringAsync(url);
                         // Parse JSON response.
                         var data = JsonConvert.DeserializeObject<ObservableCollection<UTModel>>(response);
