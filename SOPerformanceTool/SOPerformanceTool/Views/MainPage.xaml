@@ -32,8 +32,8 @@
                         <!--  TODO: change properties for narrow view  -->
                         <Setter Target="dpEndDate.(RelativePanel.Below)" Value="dpStartDate" />
                         <Setter Target="dpEndDate.Margin" Value="0" />
-                        <Setter Target="btnUT.(RelativePanel.Below)" Value="dpEndDate" />
-                        <Setter Target="btnOpData.(RelativePanel.Below)" Value="btnUT" />
+                        <!--<Setter Target="btnUT.(RelativePanel.Below)" Value="dpEndDate" />-->
+                        <!--<Setter Target="btnOpData.(RelativePanel.Below)" Value="btnUT" />-->
                         <Setter Target="rootPanel.HorizontalAlignment" Value="Left" />
                     </VisualState.Setters>
                 </VisualState>
@@ -44,9 +44,9 @@
                     <VisualState.Setters>
                         <!--  TODO: change properties for normal view  -->
                         <Setter Target="dpEndDate.(RelativePanel.RightOf)" Value="dpStartDate" />
-                        <Setter Target="btnUT.(RelativePanel.Below)" Value="dpStartDate" />
-                        <Setter Target="btnOpData.(RelativePanel.Below)" Value="dpEndDate" />
-                        <Setter Target="btnOpData.(RelativePanel.RightOf)" Value="btnUT" />
+                        <!--<Setter Target="btnUT.(RelativePanel.Below)" Value="dpStartDate" />-->
+                        <!--<Setter Target="btnOpData.(RelativePanel.Below)" Value="dpEndDate" />-->
+                        <!--<Setter Target="btnOpData.(RelativePanel.RightOf)" Value="btnUT" />-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
@@ -56,9 +56,9 @@
                     <VisualState.Setters>
                         <!--  TODO: change properties for wide view  -->
                         <Setter Target="dpEndDate.(RelativePanel.RightOf)" Value="dpStartDate" />
-                        <Setter Target="btnUT.(RelativePanel.Below)" Value="dpStartDate" />
-                        <Setter Target="btnOpData.(RelativePanel.Below)" Value="dpEndDate" />
-                        <Setter Target="btnOpData.(RelativePanel.RightOf)" Value="btnUT" />
+                        <!--<Setter Target="btnUT.(RelativePanel.Below)" Value="dpStartDate" />-->
+                        <!--<Setter Target="btnOpData.(RelativePanel.Below)" Value="dpEndDate" />-->
+                        <!--<Setter Target="btnOpData.(RelativePanel.RightOf)" Value="btnUT" />-->
                         <Setter Target="rootPanel.VerticalAlignment" Value="Center" />
                     </VisualState.Setters>
                 </VisualState>
@@ -85,21 +85,6 @@
         <!--  page content  -->
         <RelativePanel x:Name="rootPanel" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center"
                     Padding="12,8,0,0">
-            <!--<controls:Resizer>
-                <TextBox Width="200" MinWidth="200" MinHeight="60"
-                         Margin="0" Header="Parameter to pass"
-                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         TextWrapping="Wrap">
-                    <Interactivity:Interaction.Behaviors>
-                        <Behaviors:TextBoxEnterKeyBehavior>
-                            <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
-                        </Behaviors:TextBoxEnterKeyBehavior>
-                        <Core:EventTriggerBehavior>
-                            <Behaviors:FocusAction />
-                        </Core:EventTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                </TextBox>
-            </controls:Resizer>-->
             <DatePicker  x:Name="dpStartDate" Width="200" MinWidth="200" MinHeight="60"
                          Margin="0" Header="Start Date"
                          Date="{Binding StartDateValue, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -109,10 +94,10 @@
                          Margin="20, 0, 0, 0" Header="End Date"
                          Date="{Binding EndDateValue, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </DatePicker>
-            <Button x:Name="btnUT" Margin="12, 10"
+            <!--<Button x:Name="btnUT" Margin="12, 10"
                     Click="{x:Bind ViewModel.GotoUTPage}" Content="UT Minutes" />
             <Button x:Name="btnOpData" Margin="12, 10"
-                    Click="{x:Bind ViewModel.GotoAnswerPointPage}" Content="Answer/Points" />
+                    Click="{x:Bind ViewModel.GotoAnswerPointPage}" Content="Answer/Points" />-->
         </RelativePanel>
         <Grid x:Name="BottomBar" Grid.Row="2">
             <CommandBar ClosedDisplayMode="Compact">
