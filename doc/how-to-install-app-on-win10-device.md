@@ -7,6 +7,8 @@
 ![PowerShell][openpowershell]
 - Run ps script: .\Add-AppDevPackage.ps1
 **Note, if you get the exception about execution policies, please see this document: [about_Execution_Policies](https://technet.microsoft.com/library/hh847748.aspx?f=255&MSPPError=-2147217396)**
+
+Generally: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted`
 ![Run PowerShell script][exepowershell]
 
 If you see "Success: Your app was successfully installed", congratulations:)
