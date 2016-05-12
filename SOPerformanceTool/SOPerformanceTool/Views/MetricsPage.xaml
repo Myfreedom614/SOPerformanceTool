@@ -51,8 +51,12 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
+            <!--  Header Row  -->
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <!--  Content Row  -->
+            <RowDefinition Height="*" />
+            <!--  CommandBar Row  -->
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  header  -->
@@ -351,6 +355,13 @@
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
+        </Grid>
+
+        <!--  CommandBar Row  -->
+        <Grid x:Name="BottomBar" Grid.Row="2">
+            <CommandBar ClosedDisplayMode="Compact">
+                <AppBarButton Click="{x:Bind ViewModel.ExportToExcel}" Icon="Save" Label="Export to Excel file(.xls)" />
+            </CommandBar>
         </Grid>
     </Grid>
 </Page>

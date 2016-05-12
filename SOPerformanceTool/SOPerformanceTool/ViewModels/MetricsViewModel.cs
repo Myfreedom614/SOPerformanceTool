@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SOPerformanceTool.Models;
+using SOPerformanceTool.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -61,6 +62,14 @@ namespace SOPerformanceTool.ViewModels
             {
                 throw new Exception("Can't find APIBase url");
             }
+        }
+
+        public void ExportToExcel() => ExportToExcelFile();
+
+        private void ExportToExcelFile()
+        {
+            var xlsExp = new ExcelExport<MetricsModel>(MetricsData);
+            xlsExp.ExportToFile(Product + "_metrics_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
         }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)

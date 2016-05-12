@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SOPerformanceTool.Models;
+using SOPerformanceTool.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ namespace SOPerformanceTool.ViewModels
         private string APIBase = "/Api/performance/{0}?product={1}&startdate={2}&enddate={3}";
         public ObservableCollection<UTModel> UTData { get; set; }
 
-        public string PageHeader { get {return _Product.ToUpper() + " UT Performance"; } }
+        public string PageHeader { get { return _Product.ToUpper() + " UT Performance"; } }
 
         string _Product = string.Empty;
         public string Product { get { return _Product; } set { Set(ref _Product, value); } }
@@ -54,6 +55,14 @@ namespace SOPerformanceTool.ViewModels
             }
         }
 
+        public void ExportToExcel() => ExportToExcelFile();
+
+        private void ExportToExcelFile()
+        {
+            var xlsExp = new ExcelExport<UTModel>(UTData);
+            xlsExp.ExportToFile(Product + "_ut_" + StartDateValue.Replace("/","") + "-" + EndDateValue.Replace("/", ""));
+        }
+
         public void ShowBusy()
         {
             Views.Shell.SetBusy(true, _BusyText);
@@ -63,7 +72,7 @@ namespace SOPerformanceTool.ViewModels
         {
             Views.Shell.SetBusy(false);
         }
-        
+
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.ContainsKey(nameof(StartDateValue)))
