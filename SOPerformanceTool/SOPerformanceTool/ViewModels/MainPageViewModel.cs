@@ -46,6 +46,10 @@ namespace SOPerformanceTool.ViewModels
                     //System.Diagnostics.Debug.WriteLine("AnswerPoint");
                     GotoAnswerPointPage();
                     break;
+                case QueryMode.Metrics:
+                    //System.Diagnostics.Debug.WriteLine("Metrics");
+                    GotoMetricsPage();
+                    break;
             }
         }
         #endregion
@@ -116,6 +120,9 @@ namespace SOPerformanceTool.ViewModels
 
         public void GotoAnswerPointPage() =>
             NavigationService.Navigate(typeof(Views.AnswerPointPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
+
+        public void GotoMetricsPage() =>
+            NavigationService.Navigate(typeof(Views.MetricsPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
 
         public void GotoSettings() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 0);

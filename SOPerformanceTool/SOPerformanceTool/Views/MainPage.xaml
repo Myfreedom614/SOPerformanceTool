@@ -106,6 +106,7 @@
                         <MenuFlyout Placement="Top">
                             <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="0" Text="UT Minutes" />
                             <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="1" Text="Answer/Points" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="2" Text="Metrics Data" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
