@@ -13,7 +13,11 @@
 - ### Check Answer/Vote/Points performance in a time range
 ![Answer/Points Page][answerpage]
 
+- ### Export to Excel file(.xls)
+![Export to Excel file(.xls)][exportexcel]
+
 [mainpage]: img/mainpage_v1.2.jpg "Main Page"
 [mainpage2]: img/mainpage2_v1.2.jpg "Main Page"
 [utpage]: img/utpage.jpg "UT Page"
 [answerpage]: img/answerpage.jpg "Answer/Points Page"
+[exportexcel]: img/excelexport.jpg "Export to Excel file(.xls)"
