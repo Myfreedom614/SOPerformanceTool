@@ -13,6 +13,9 @@ namespace SOPerformanceTool.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        //string _Product = string.Empty;
+        //public string Product { get { return _Product; } set { Set(ref _Product, value); } }
+        //public string PageHeader { get { return GetCurrentProduct().ToUpper() + " Main Page"; } }
         public MainPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -68,6 +71,18 @@ namespace SOPerformanceTool.ViewModels
                 if (content != null)
                 {
                     var tb = ((Windows.UI.Xaml.Controls.Panel)content).Children.FirstOrDefault(x=>x is Windows.UI.Xaml.Controls.TextBlock);
+                    if (tb != null)
+                    {
+                        return ((Windows.UI.Xaml.Controls.TextBlock)tb).Tag.ToString();
+                    }
+                }
+            }
+            else
+            {
+                var content = ((HamburgerButtonInfo)Shell.HamburgerMenu.PrimaryButtons.FirstOrDefault()).Content;
+                if (content != null)
+                {
+                    var tb = ((Windows.UI.Xaml.Controls.Panel)content).Children.FirstOrDefault(x => x is Windows.UI.Xaml.Controls.TextBlock);
                     if (tb != null)
                     {
                         return ((Windows.UI.Xaml.Controls.TextBlock)tb).Tag.ToString();

@@ -26,7 +26,7 @@
                     </Controls:HamburgerButtonInfo>
                     <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                         <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Width="48" Height="48" Symbol="Favorite" />
+                            <SymbolIcon Width="48" Height="48" Symbol="AlignRight" />
                             <TextBlock Margin="12,0,0,0" Tag="o365" VerticalAlignment="Center" Text="Office365" />
                         </StackPanel>
                     </Controls:HamburgerButtonInfo>
