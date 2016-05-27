@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APIBase" xml:space="preserve">
-    <value>http://cn-yapchen</value>
+    <value>http://localhost:34615</value>
+  </data>
+  <data name="APIVersion" xml:space="preserve">
+    <value>1</value>
   </data>
 </root>

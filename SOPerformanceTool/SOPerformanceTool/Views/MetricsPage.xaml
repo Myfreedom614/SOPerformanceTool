@@ -291,7 +291,7 @@
                                         <TextBlock Text="{Binding OverallAR, Converter={StaticResource DoubleToPercentageConverter}}" />
                                     </Border>
                                     <Border Grid.Column="12">
-                                        <TextBlock Text="{Binding AveragetIRT, Converter={StaticResource DoubleToPercentageConverter}}" />
+                                        <TextBlock Text="{Binding AveragetIRT}" />
                                     </Border>
                                     <Border Grid.Column="13">
                                         <TextBlock Text="{Binding NOIR, Converter={StaticResource DoubleToPercentageConverter}}" />

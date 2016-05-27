@@ -16,6 +16,7 @@ namespace SOPerformanceTool.ViewModels
     public class AnswerPointViewModel : ViewModelBase
     {
         private string APIBase = "/Api/performance/{0}?product={1}&startdate={2}&enddate={3}";
+        private string APIVersion; 
         public ObservableCollection<AnswerPointModel> AnswerPointData { get; set; }
 
         public string PageHeader { get { return _Product.ToUpper() + " Answer/Points Performance"; } }
@@ -53,6 +54,7 @@ namespace SOPerformanceTool.ViewModels
             AnswerPointData = new ObservableCollection<AnswerPointModel>();
             
             var resources = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            APIVersion = resources.GetString("APIVersion");
             var baseurl = resources.GetString("APIBase");
             if (!String.IsNullOrEmpty(baseurl))
             {
@@ -103,13 +105,15 @@ namespace SOPerformanceTool.ViewModels
                     handler.UseDefaultCredentials = true;
                     using (var client = new HttpClient(handler))
                     {
+                        //Choose API version
+                        client.DefaultRequestHeaders.Add("X-Version", APIVersion);
                         var url = string.Format(APIBase, "opdata", Product, StartDateValue, EndDateValue);
                         var response = await client.GetStringAsync(url);
                         // Parse JSON response.
                         var data = JsonConvert.DeserializeObject<ObservableCollection<AnswerPointModel>>(response);
                         foreach (var item in data)
                         {
-                            AnswerPointData.Add(new AnswerPointModel() { Alias = item.Alias, Vote = item.Vote, Answers = item.Answers, Accepted = item.Accepted, Points = item.Points });
+                            AnswerPointData.Add(new AnswerPointModel() { Alias = item.Alias, Vote = item.Vote, Answers = item.Answers, Accepted = item.Accepted, ReplySuccess = item.ReplySuccess, Points = item.Points });
                         }
                     }
                 }

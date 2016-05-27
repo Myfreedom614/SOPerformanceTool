@@ -14,7 +14,11 @@
     <Page.DataContext>
         <vm:AnswerPointViewModel x:Name="ViewModel" />
     </Page.DataContext>
-    
+
+    <Page.Resources>
+        <cv:DoubleToPercentageConverter x:Key="DoubleToPercentageConverter" />
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -102,6 +106,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0">
                             <TextBlock Text="Alias" FontWeight="Bold" />
@@ -116,6 +121,9 @@
                             <TextBlock Text="Accepted" FontWeight="Bold" />
                         </Border>
                         <Border Grid.Column="4">
+                            <TextBlock Text="Reply Success" FontWeight="Bold" />
+                        </Border>
+                        <Border Grid.Column="5">
                             <TextBlock Text="Points" FontWeight="Bold" />
                         </Border>
                     </Grid>
@@ -124,6 +132,7 @@
                             <DataTemplate>
                                 <Grid Width="{Binding Path=ActualWidth, ElementName=rootSP}">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
@@ -154,6 +163,9 @@
                                         <TextBlock Text="{Binding Accepted}" />
                                     </Border>
                                     <Border Grid.Column="4">
+                                        <TextBlock Text="{Binding ReplySuccess, Converter={StaticResource DoubleToPercentageConverter}}" />
+                                    </Border>
+                                    <Border Grid.Column="5">
                                         <TextBlock Text="{Binding Points}" />
                                     </Border>
                                 </Grid>
