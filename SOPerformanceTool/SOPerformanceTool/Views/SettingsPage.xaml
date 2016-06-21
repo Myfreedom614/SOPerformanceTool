@@ -108,6 +108,11 @@
                             <Run>Version</Run>
                             <Run Text="{Binding Version}" />
                         </TextBlock>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock Text="Github Page:" VerticalAlignment="Center" />
+                            <HyperlinkButton Margin="5,0,0,0" Content="Link" NavigateUri="https://github.com/Myfreedom614/SOPerformanceTool" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </PivotItem>
