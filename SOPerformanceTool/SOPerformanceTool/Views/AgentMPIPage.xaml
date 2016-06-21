@@ -1,6 +1,6 @@
 ﻿<Page
-    x:Class="SOPerformanceTool.Views.AnswerPointPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    x:Class="SOPerformanceTool.Views.AgentMPIPage"
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Behaviors="using:Template10.Behaviors"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
@@ -11,14 +11,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cv="using:SOPerformanceTool.Converters"
     xmlns:vm="using:SOPerformanceTool.ViewModels" x:Name="ThisPage" mc:Ignorable="d">
-    
-    <Page.DataContext>
-        <vm:AnswerPointViewModel x:Name="ViewModel" />
-    </Page.DataContext>
 
-    <Page.Resources>
-        <cv:DoubleToPercentageConverter x:Key="DoubleToPercentageConverter" />
-    </Page.Resources>
+    <Page.DataContext>
+        <vm:AgentMPIViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -80,30 +76,9 @@
                 </Style>
             </Grid.Resources>
             <ScrollViewer Padding="12,8,12,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <!--<TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
-                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />-->
-                <!--<GridView ItemsSource="{Binding UTData}">
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Width="200">
-                                        <TextBlock Text="Alias" HorizontalAlignment="Center" Margin="20,10,20,0"/>
-                                        <TextBlock Text="UTMinutes" HorizontalAlignment="Center" Margin="20,10"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Width="200" Height="60">
-                                        <TextBlock Text="{Binding Alias}" HorizontalAlignment="Center" Margin="20,10,20,0"/>
-                                        <TextBlock Text="{Binding UTMinutes}" HorizontalAlignment="Center" Margin="20,10"/>
-                                    </StackPanel>
-                                </StackPanel>
-                                
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>-->
                 <StackPanel x:Name="rootSP">
                     <Grid Width="{Binding Path=ActualWidth, ElementName=rootSP}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -113,28 +88,20 @@
                             <TextBlock Text="Alias" FontWeight="Bold" />
                         </Border>
                         <Border Grid.Column="1">
-                            <TextBlock Text="Vote" FontWeight="Bold" />
+                            <TextBlock Text="Labor" FontWeight="Bold" />
                         </Border>
                         <Border Grid.Column="2">
-                            <TextBlock Text="Answers" FontWeight="Bold" />
+                            <TextBlock Text="SDReplied" FontWeight="Bold" />
                         </Border>
                         <Border Grid.Column="3">
-                            <TextBlock Text="Accepted" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="4">
-                            <TextBlock Text="Reply Success" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="5">
-                            <TextBlock Text="Points" FontWeight="Bold" />
+                            <TextBlock Text="ReplyMPI" FontWeight="Bold" />
                         </Border>
                     </Grid>
-                    <ItemsControl ItemsSource="{Binding AnswerPointData}">
+                    <ItemsControl ItemsSource="{Binding AgentMPIData}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Width="{Binding Path=ActualWidth, ElementName=rootSP}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
@@ -155,19 +122,13 @@
                                         <TextBlock Text="{Binding Alias}" />
                                     </Border>
                                     <Border Grid.Column="1">
-                                        <TextBlock Text="{Binding Vote}" />
+                                        <TextBlock Text="{Binding Labor}" />
                                     </Border>
                                     <Border Grid.Column="2">
-                                        <TextBlock Text="{Binding Answers}" />
+                                        <TextBlock Text="{Binding SDReplied}" />
                                     </Border>
                                     <Border Grid.Column="3">
-                                        <TextBlock Text="{Binding Accepted}" />
-                                    </Border>
-                                    <Border Grid.Column="4">
-                                        <TextBlock Text="{Binding ReplySuccess, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="5">
-                                        <TextBlock Text="{Binding Points}" />
+                                        <TextBlock Text="{Binding ReplyMPI}" />
                                     </Border>
                                 </Grid>
                             </DataTemplate>

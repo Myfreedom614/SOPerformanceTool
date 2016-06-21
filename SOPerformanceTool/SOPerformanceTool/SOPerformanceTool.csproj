@@ -105,12 +105,15 @@
     <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Converters\DoubleToPercentageConverter.cs" />
     <Compile Include="Models\AnswerPointModel.cs" />
+    <Compile Include="Models\MPIModel.cs" />
     <Compile Include="Models\QueryMode.cs" />
     <Compile Include="Models\UTModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SettingsServices\ISettingsService.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="Utilities\ExcelExport.cs" />
+    <Compile Include="ViewModels\AgentMPIViewModel.cs" />
+    <Compile Include="ViewModels\OverllMPIViewModel.cs" />
     <Compile Include="ViewModels\MetricsViewModel.cs" />
     <Compile Include="ViewModels\AnswerPointViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -118,6 +121,9 @@
     <Compile Include="Models\MetricsModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\UTPageViewModel.cs" />
+    <Compile Include="Views\AgentMPIPage.xaml.cs">
+      <DependentUpon>AgentMPIPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AnswerPointPage.xaml.cs">
       <DependentUpon>AnswerPointPage.xaml</DependentUpon>
     </Compile>
@@ -132,6 +138,9 @@
     </Compile>
     <Compile Include="Views\MetricsPage.xaml.cs">
       <DependentUpon>MetricsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverallMPIPage.xaml.cs">
+      <DependentUpon>OverallMPIPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -175,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Views\AgentMPIPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AnswerPointPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +205,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MetricsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OverallMPIPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -107,6 +107,8 @@
                             <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="0" Text="UT Minutes" />
                             <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="1" Text="Answer/Points" />
                             <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="2" Text="Metrics Data" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="3" Text="Overall MPI" />
+                            <MenuFlyoutItem Command="{x:Bind ViewModel.SetPaneCommand}" CommandParameter="4" Text="Agent MPI" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>

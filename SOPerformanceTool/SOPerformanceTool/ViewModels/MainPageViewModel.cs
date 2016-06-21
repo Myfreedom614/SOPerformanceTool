@@ -53,6 +53,14 @@ namespace SOPerformanceTool.ViewModels
                     //System.Diagnostics.Debug.WriteLine("Metrics");
                     GotoMetricsPage();
                     break;
+                case QueryMode.OverallMPI:
+                    //System.Diagnostics.Debug.WriteLine("OverallMPI");
+                    GotoOverallMPI();
+                    break;
+                case QueryMode.AgentMPI:
+                    //System.Diagnostics.Debug.WriteLine("AgentMPI");
+                    GotoAgentMPI();
+                    break;
             }
         }
         #endregion
@@ -138,6 +146,12 @@ namespace SOPerformanceTool.ViewModels
 
         public void GotoMetricsPage() =>
             NavigationService.Navigate(typeof(Views.MetricsPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
+
+        public void GotoOverallMPI() =>
+            NavigationService.Navigate(typeof(Views.OverallMPIPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
+
+        public void GotoAgentMPI() =>
+            NavigationService.Navigate(typeof(Views.AgentMPIPage), new List<Object>() { GetCurrentProduct(), StartDateValue, EndDateValue });
 
         public void GotoSettings() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 0);
