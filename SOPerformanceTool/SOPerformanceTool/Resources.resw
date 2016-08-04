@@ -121,6 +121,6 @@
     <value>http://cn-yapchen</value>
   </data>
   <data name="APIVersion" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
 </root>

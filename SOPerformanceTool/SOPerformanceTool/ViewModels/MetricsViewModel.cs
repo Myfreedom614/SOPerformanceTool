@@ -16,6 +16,7 @@ namespace SOPerformanceTool.ViewModels
     public class MetricsViewModel : ViewModelBase
     {
         private string APIBase = "/Api/performance/{0}?product={1}&startdate={2}&enddate={3}";
+        private string APIVersion;
         public ObservableCollection<MetricsModel> MetricsData { get; set; }
 
         public string PageHeader { get { return _Product.ToUpper() + " Metrics Data"; } }
@@ -53,6 +54,7 @@ namespace SOPerformanceTool.ViewModels
             MetricsData = new ObservableCollection<MetricsModel>();
             
             var resources = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            APIVersion = resources.GetString("APIVersion");
             var baseurl = resources.GetString("APIBase");
             if (!String.IsNullOrEmpty(baseurl))
             {
@@ -103,6 +105,8 @@ namespace SOPerformanceTool.ViewModels
                     handler.UseDefaultCredentials = true;
                     using (var client = new HttpClient(handler))
                     {
+                        //Choose API version
+                        client.DefaultRequestHeaders.Add("X-Version", APIVersion);
                         var url = string.Format(APIBase, "metrics", Product, StartDateValue, EndDateValue);
                         var response = await client.GetStringAsync(url);
                         // Parse JSON response.
@@ -116,6 +120,9 @@ namespace SOPerformanceTool.ViewModels
                                 Year = item.Year,
                                 Scenario = item.Scenario,
                                 Volume = item.Volume,
+                                SolutionRatio = item.SolutionRatio,
+                                FCSR = item.FCSR,
+                                CCSR = item.CCSR,
                                 ReplyWithoutComVolume = item.ReplyWithoutComVolume,
                                 OneDayRR = item.OneDayRR,
                                 ThreeDayRR = item.ThreeDayRR,

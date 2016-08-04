@@ -7,6 +7,9 @@
         public string Year { get; set; }
         public string Scenario { get; set; }
         public string Volume { get; set; }
+        public double SolutionRatio { get; set; }
+        public double FCSR { get; set; }
+        public double CCSR { get; set; }
         public string ReplyWithoutComVolume { get; set; }
         public double OneDayRR { get; set; }
         public double ThreeDayRR { get; set; }
