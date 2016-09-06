@@ -30,6 +30,18 @@
                             <TextBlock Margin="12,0,0,0" Tag="o365" VerticalAlignment="Center" Text="Office365" />
                         </StackPanel>
                     </Controls:HamburgerButtonInfo>
+                    <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48" Height="48" Symbol="Comment" />
+                            <TextBlock Margin="12,0,0,0" Tag="devcenter" VerticalAlignment="Center" Text="DevCenter" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
+                    <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48" Height="48" Symbol="Library" />
+                            <TextBlock Margin="12,0,0,0" Tag="windowsiot" VerticalAlignment="Center" Text="Windows IoT" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
                 </Controls:HamburgerMenu.PrimaryButtons>
 
                 <Controls:HamburgerMenu.SecondaryButtons>
