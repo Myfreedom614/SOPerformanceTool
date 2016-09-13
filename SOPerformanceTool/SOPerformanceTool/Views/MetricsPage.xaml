@@ -209,13 +209,13 @@
                             <TextBlock Text="SDWorkedVol" FontWeight="Bold"/>
                         </Border>
                         <Border Grid.Column="30">
-                            <TextBlock Text="SolutionRatio" FontWeight="Bold"/>
+                            <TextBlock Text="SR" FontWeight="Bold"/>
                         </Border>
                         <Border Grid.Column="31">
                             <TextBlock Text="FCSR" FontWeight="Bold"/>
                         </Border>
                         <Border Grid.Column="32">
-                            <TextBlock Text="CCSR" FontWeight="Bold"/>
+                            <TextBlock Text="OPCSR" FontWeight="Bold"/>
                         </Border>
                     </Grid>
                     <ItemsControl ItemsSource="{Binding MetricsData}">
@@ -366,7 +366,7 @@
                                         <TextBlock Text="{Binding FCSR, Converter={StaticResource DoubleToPercentageConverter}}" />
                                     </Border>
                                     <Border Grid.Column="32">
-                                        <TextBlock Text="{Binding CCSR, Converter={StaticResource DoubleToPercentageConverter}}" />
+                                        <TextBlock Text="{Binding OPCSR, Converter={StaticResource DoubleToPercentageConverter}}" />
                                     </Border>
                                 </Grid>
                             </DataTemplate>

@@ -123,6 +123,7 @@ namespace SOPerformanceTool.ViewModels
                                 SolutionRatio = item.SolutionRatio,
                                 FCSR = item.FCSR,
                                 CCSR = item.CCSR,
+                                OPCSR = item.OPCSR,
                                 ReplyWithoutComVolume = item.ReplyWithoutComVolume,
                                 OneDayRR = item.OneDayRR,
                                 ThreeDayRR = item.ThreeDayRR,

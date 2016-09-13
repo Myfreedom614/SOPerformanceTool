@@ -10,6 +10,7 @@
         public double SolutionRatio { get; set; }
         public double FCSR { get; set; }
         public double CCSR { get; set; }
+        public double OPCSR { get; set; }
         public string ReplyWithoutComVolume { get; set; }
         public double OneDayRR { get; set; }
         public double ThreeDayRR { get; set; }
