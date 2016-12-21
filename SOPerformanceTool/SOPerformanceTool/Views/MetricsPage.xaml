@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page xmlns:syncfusion="using:Syncfusion.UI.Xaml.Grid" 
     x:Class="SOPerformanceTool.Views.MetricsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -17,7 +17,246 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <cv:DoubleToPercentageConverter x:Key="DoubleToPercentageConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Syncfusion.SfGrid.UWP/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <cv:DoubleToPercentageConverter x:Key="DoubleToPercentageConverter" />
+            <cv:SelectionForegroundConverter x:Key="selectionForegroundConverter" />
+            <syncfusion:SortDirectionToVisibilityConverter x:Key="sortDirectionToVisibilityConverter" />
+            <syncfusion:SortDirectionToWidthConverter x:Key="sortDirectionToWidthConverter" />
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="FontSize" Value="19" />
+            </Style>
+
+            <!--  DataGridControl's Style  -->
+            <Style TargetType="syncfusion:SfDataGrid">
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="syncfusion:SfDataGrid">
+                            <Grid>
+                                <Image HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Opacity="0.82"
+                                       Source="../Assets/Platform.png"
+                                       Stretch="UniformToFill" />
+
+                                <Border Background="Transparent"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Busy">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_BusyIndicatorBorder" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Normal" />
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+
+
+
+                                    <ScrollViewer x:Name="PART_ScrollViewer"
+                                BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                IsDeferredScrollingEnabled="False"
+                                IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                ZoomMode="Disabled">
+                                        <syncfusion:VisualContainer x:Name="PART_VisualContainer"
+                                                Background="Transparent"
+                                                HortizontalScrollBarOffset="{Binding Path=HorizontalOffset,
+                                                                                                         ElementName=PART_ScrollViewer,
+                                                                                                         Mode=OneWay}"
+                                                ManipulationMode="{TemplateBinding ManipulationMode}"
+                                                VerticalScrollBarOffset="{Binding Path=VerticalOffset,
+                                                                                                      ElementName=PART_ScrollViewer,
+                                                                                                      Mode=OneWay}" />
+                                    </ScrollViewer>
+                                </Border>
+                                <Border x:Name="PART_BusyIndicatorBorder"
+                        Grid.Row="1"
+                        Width="200"
+                        Height="100"
+                        Background="{StaticResource AppBarBackgroundThemeBrush}"
+                        BorderBrush="{StaticResource ApplicationForegroundThemeBrush}"
+                        BorderThickness="1"
+                        Visibility="Collapsed">
+
+                                    <ProgressRing Width="60"
+                                Height="60"
+                                IsActive="True" />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="syncfusion:GridHeaderCellControl">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="Padding" Value="10,3,3,3" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="19" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+                <Setter Property="Foreground" Value="#FFFFFFFF" />
+                <Setter Property="FontWeight" Value="Normal" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="syncfusion:GridHeaderCellControl">
+                            <Grid>
+                                <Border BorderBrush="#FF777777" BorderThickness="0,0,1,0" />
+                                <Border Background="Transparent"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="0" MinWidth="{Binding Path=ColumnOptionsWidth, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                      VerticalAlignment="Center"
+                                      FontFamily="{TemplateBinding FontFamily}"
+                                      FontSize="{TemplateBinding FontSize}"
+                                      FontWeight="{TemplateBinding FontWeight}" />
+                                        <Grid Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="18" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Path Width="10.84"
+                            Height="9.87"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="F1M753.644,-13.0589L753.736,-12.9639 753.557,-12.7816 732.137,8.63641 732.137,29.7119 756.445,5.40851 764.094,-2.24384 764.275,-2.42352 771.834,5.1286 796.137,29.4372 796.137,8.36163 774.722,-13.0589 764.181,-23.5967 753.644,-13.0589z"
+                            Fill="#FFF5F8F1"
+                            Stretch="Fill"
+                            Visibility="{Binding Path=SortDirection,
+                                                                       RelativeSource={RelativeSource TemplatedParent},
+                                                                       ConverterParameter=Ascending,
+                                                                       Converter={StaticResource sortDirectionToVisibilityConverter}}">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <TransformGroup.Children>
+                                                            <RotateTransform Angle="0" />
+                                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                        </TransformGroup.Children>
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                            </Path>
+
+                                            <Path Width="10.84"
+                            Height="9.87"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="F1M181.297,177.841L181.205,177.746 181.385,177.563 202.804,156.146 202.804,135.07 178.497,159.373 170.847,167.026 170.666,167.205 163.107,159.653 138.804,135.345 138.804,156.42 160.219,177.841 170.76,188.379 181.297,177.841z"
+                            Fill="#FFF5F8F1"
+                            Stretch="Fill"
+                            Visibility="{Binding Path=SortDirection,
+                                                                       RelativeSource={RelativeSource TemplatedParent},
+                                                                       ConverterParameter=Decending,
+                                                                       Converter={StaticResource sortDirectionToVisibilityConverter}}">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <TransformGroup.Children>
+                                                            <RotateTransform Angle="0" />
+                                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                        </TransformGroup.Children>
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                            <TextBlock Grid.Column="1"
+                                 FontSize="10"
+                                 Foreground="White"
+                                 Text="{TemplateBinding SortNumber}"
+                                 Visibility="{TemplateBinding SortNumberVisibility}" />
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--  Row Style  -->
+            <Style TargetType="syncfusion:VirtualizingCellsControl">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="BorderThickness" Value="0" />
+
+                <Setter Property="RowHighlightBorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="syncfusion:VirtualizingCellsControl">
+                            <Grid>
+                                <Grid Background="#FF000000" Opacity="0.75" />
+                                <Border Margin="1"
+                        BorderBrush="{TemplateBinding RowHoverBackgroundBrush}"
+                        BorderThickness="{TemplateBinding RowHighlightBorderThickness}"
+                        Clip="{TemplateBinding HighlightBorderClipRect}"
+                        Visibility="{TemplateBinding HighlightSelectionBorderVisiblity}" />
+                                <Border Background="{TemplateBinding RowSelectionBrush}"
+                        Clip="{TemplateBinding SelectionBorderClipRect}"
+                        Visibility="{TemplateBinding SelectionBorderVisiblity}" />
+                                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ContentPresenter Foreground="White" Opacity="{Binding SelectionBorderVisiblity, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource selectionForegroundConverter}}" />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--  Grid Cell Style  -->
+            <Style TargetType="syncfusion:GridCell">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="#FF777777" />
+                <Setter Property="BorderThickness" Value="0,0,1,1" />
+                <Setter Property="Padding" Value="10,10,0,0" />
+                <Setter Property="FontFamily" Value=" Segoe UI" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+
+            <Style TargetType="syncfusion:HeaderRowControl">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderBrush" Value="#FFCCCCCC" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="syncfusion:HeaderRowControl">
+                            <Grid>
+                                <Grid Background="#FF7AA732" Opacity="0.78" />
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ContentPresenter />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -61,330 +300,200 @@
 
         <!--  header  -->
         <controls:PageHeader Frame="{x:Bind Frame}" Text="{x:Bind ViewModel.PageHeader}">
-            <Interactivity:Interaction.Behaviors>
+            <!--<Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
-            </Interactivity:Interaction.Behaviors>
+            </Interactivity:Interaction.Behaviors>-->
         </controls:PageHeader>
 
         <!--  content  -->
         <Grid Grid.Row="1">
-            <Grid.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="BorderBrush" Value="Black" />
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Padding" Value="5" />
-                </Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="5,0" />
-                </Style>
-            </Grid.Resources>
-            <ScrollViewer Padding="12,8,12,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel x:Name="rootSP">
-                    <Grid Width="{Binding Path=ActualWidth, ElementName=rootSP}">
-                        <Grid.ColumnDefinitions>
-                            <!-- Hide -->
-                            <ColumnDefinition Width="0" />
-                            <ColumnDefinition Width="1.3*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="1.7*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2.5*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="1.3*" />
-                            <ColumnDefinition Width="1.4*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="1.4*" />
-                            <ColumnDefinition Width="1.4*" />
-                            <ColumnDefinition Width="1.6*" />
-                            <ColumnDefinition Width="1.8*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0">
-                            <TextBlock Text="Month" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="1">
-                            <TextBlock Text="MonthName" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="2">
-                            <TextBlock Text="Year" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="3">
-                            <TextBlock Text="Scenario" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="4">
-                            <TextBlock Text="Volume" FontWeight="Bold" />
-                        </Border>
-                        <Border Grid.Column="5">
-                            <TextBlock Text="ReplyWithoutComVolume" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="6">
-                            <TextBlock Text="1DayRR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="7">
-                            <TextBlock Text="3DayRR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="8">
-                            <TextBlock Text="OverallRR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="9">
-                            <TextBlock Text="3DayAR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="10">
-                            <TextBlock Text="7DayAR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="11">
-                            <TextBlock Text="OverallAR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="12">
-                            <TextBlock Text="AveragetIRT" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="13">
-                            <TextBlock Text="NOIR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="14">
-                            <TextBlock Text="3DayHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="15">
-                            <TextBlock Text="7DayHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="16">
-                            <TextBlock Text="OverallHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="17">
-                            <TextBlock Text="3DayAHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="18">
-                            <TextBlock Text="7DayAHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="19">
-                            <TextBlock Text="OverallAHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="20">
-                            <TextBlock Text="3DaySDAR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="21">
-                            <TextBlock Text="7DaySDAR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="22">
-                            <TextBlock Text="OverallSDAR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="23">
-                            <TextBlock Text="3DaySDHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="24">
-                            <TextBlock Text="7DaySDHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="25">
-                            <TextBlock Text="OverallSDHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="26">
-                            <TextBlock Text="3DaySDAHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="27">
-                            <TextBlock Text="7DaySDAHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="28">
-                            <TextBlock Text="OverallSDAHR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="29">
-                            <TextBlock Text="SDWorkedVol" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="30">
-                            <TextBlock Text="SR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="31">
-                            <TextBlock Text="FCSR" FontWeight="Bold"/>
-                        </Border>
-                        <Border Grid.Column="32">
-                            <TextBlock Text="OPCSR" FontWeight="Bold"/>
-                        </Border>
-                    </Grid>
-                    <ItemsControl ItemsSource="{Binding MetricsData}">
-                        <ItemsControl.ItemTemplate>
+            <syncfusion:SfDataGrid x:Name="dataGrid"
+                                   AutoGenerateColumns="False"
+                                   Background="#FFEBEBEB"
+                                   BorderBrush="#FFB1B9B8"
+                                   Margin="10,13,10,15"
+                                   BorderThickness="1"
+                                   ColumnSizer="Star"
+                                   FontFamily="Segoe UI"
+                                   NavigationMode="Row"
+                                   RowHeight="55"
+                                   RowSelectionBrush="#FF010000"
+                                   SelectionForegroundBrush="#FFFFFFFF"
+                                   ItemsSource="{Binding MetricsData}">
+                <syncfusion:SfDataGrid.Columns>
+                    <!--<syncfusion:GridTextColumn MappingName="Month" />-->
+                    <syncfusion:GridTextColumn MappingName="MonthName" />
+                    <syncfusion:GridTextColumn MappingName="Year" />
+                    <syncfusion:GridTextColumn MappingName="Scenario" MinimumWidth="200" />
+                    <syncfusion:GridNumericColumn MappingName="Volume" />
+                    <syncfusion:GridTemplateColumn HeaderText="1DRR"
+                                       MappingName="OneDayRR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid Width="{Binding Path=ActualWidth, ElementName=rootSP}">
-                                    <Grid.ColumnDefinitions>
-                                        <!-- Hide -->
-                                        <ColumnDefinition Width="0" />
-                                        <ColumnDefinition Width="1.3*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="1.7*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2.5*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="1.3*" />
-                                        <ColumnDefinition Width="1.4*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                        <ColumnDefinition Width="1.5*" />
-                                        <ColumnDefinition Width="1.4*" />
-                                        <ColumnDefinition Width="1.4*" />
-                                        <ColumnDefinition Width="1.6*" />
-                                        <ColumnDefinition Width="1.8*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="BorderBrush" Value="Black" />
-                                            <Setter Property="BorderThickness" Value="1" />
-                                            <Setter Property="Background" Value="White" />
-                                            <Setter Property="Padding" Value="5" />
-                                        </Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Margin" Value="5,0" />
-                                        </Style>
-                                    </Grid.Resources>
-                                    <Border Grid.Column="0">
-                                        <TextBlock Text="{Binding Month}" />
-                                    </Border>
-                                    <Border Grid.Column="1">
-                                        <TextBlock Text="{Binding MonthName}" />
-                                    </Border>
-                                    <Border Grid.Column="2">
-                                        <TextBlock Text="{Binding Year}" />
-                                    </Border>
-                                    <Border Grid.Column="3">
-                                        <TextBlock Text="{Binding Scenario}" />
-                                    </Border>
-                                    <Border Grid.Column="4">
-                                        <TextBlock Text="{Binding Volume}" />
-                                    </Border>
-                                    <Border Grid.Column="5">
-                                        <TextBlock Text="{Binding ReplyWithoutComVolume}" />
-                                    </Border>
-                                    <Border Grid.Column="6">
-                                        <TextBlock Text="{Binding OneDayRR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="7">
-                                        <TextBlock Text="{Binding ThreeDayRR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="8">
-                                        <TextBlock Text="{Binding OverallRR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="9">
-                                        <TextBlock Text="{Binding ThreeDayAR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="10">
-                                        <TextBlock Text="{Binding SevenDayAR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="11">
-                                        <TextBlock Text="{Binding OverallAR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="12">
-                                        <TextBlock Text="{Binding AveragetIRT}" />
-                                    </Border>
-                                    <Border Grid.Column="13">
-                                        <TextBlock Text="{Binding NOIR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="14">
-                                        <TextBlock Text="{Binding ThreeDayHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="15">
-                                        <TextBlock Text="{Binding SevenDayHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="16">
-                                        <TextBlock Text="{Binding OverallHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="17">
-                                        <TextBlock Text="{Binding ThreeDayAHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="18">
-                                        <TextBlock Text="{Binding SevenDayAHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="19">
-                                        <TextBlock Text="{Binding OverallAHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="20">
-                                        <TextBlock Text="{Binding ThreeDaySDAR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="21">
-                                        <TextBlock Text="{Binding SevenDaySDAR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="22">
-                                        <TextBlock Text="{Binding OverallSDAR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="23">
-                                        <TextBlock Text="{Binding ThreeDaySDHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="24">
-                                        <TextBlock Text="{Binding SevenDaySDHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="25">
-                                        <TextBlock Text="{Binding OverallSDHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="26">
-                                        <TextBlock Text="{Binding ThreeDaySDAHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="27">
-                                        <TextBlock Text="{Binding SevenDaySDAHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="28">
-                                        <TextBlock Text="{Binding OverallSDAHR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="29">
-                                        <TextBlock Text="{Binding SDWorkedVol}" />
-                                    </Border>
-                                    <Border Grid.Column="30">
-                                        <TextBlock Text="{Binding SolutionRatio, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="31">
-                                        <TextBlock Text="{Binding FCSR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                    <Border Grid.Column="32">
-                                        <TextBlock Text="{Binding OPCSR, Converter={StaticResource DoubleToPercentageConverter}}" />
-                                    </Border>
-                                </Grid>
+                                <TextBlock Text="{Binding OneDayRR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Grid Width="{Binding Path=ActualWidth, ElementName=rootSP}">
-                        <Border>
-                            <TextBlock Text="{Binding DateRangeInfo}" HorizontalAlignment="Right" />
-                        </Border>
-                    </Grid>
-                </StackPanel>
-            </ScrollViewer>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="3DRR"
+                                       MappingName="ThreeDayRR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ThreeDayRR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="OverallRR"
+                                       MappingName="OverallRR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding OverallRR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+
+                    <!--AR-->
+                    <syncfusion:GridTemplateColumn HeaderText="3DAR"
+                                       MappingName="ThreeDayAR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ThreeDayAR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="7DAR"
+                                       MappingName="SevenDayAR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SevenDayAR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="OverallAR"
+                                       MappingName="OverallAR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding OverallAR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    
+                    <syncfusion:GridNumericColumn MappingName="AveragetIRT" />
+                    
+                    <syncfusion:GridTemplateColumn HeaderText="NOIR"
+                                       MappingName="NOIR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding NOIR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    
+                    <!--HR-->
+                    <syncfusion:GridTemplateColumn HeaderText="3DHR"
+                                       MappingName="ThreeDayHR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ThreeDayHR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="7DHR"
+                                       MappingName="SevenDayHR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SevenDayHR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="OverallHR"
+                                       MappingName="OverallHR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding OverallHR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+
+                    <!--AHR-->
+                    <syncfusion:GridTemplateColumn HeaderText="3DAHR"
+                                       MappingName="ThreeDayAHR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ThreeDayAHR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="7DAHR"
+                                       MappingName="SevenDayAHR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SevenDayAHR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+                    <syncfusion:GridTemplateColumn HeaderText="OverallAHR"
+                                       MappingName="OverallAHR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding OverallAHR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+
+                    <syncfusion:GridNumericColumn MappingName="SDWorkedVol" />
+
+                    <syncfusion:GridTemplateColumn HeaderText="SR"
+                                       MappingName="SolutionRatio"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SolutionRatio, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+
+                    <syncfusion:GridTemplateColumn HeaderText="FCSR"
+                                       MappingName="FCSR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FCSR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+
+                    <syncfusion:GridTemplateColumn HeaderText="OPCSR"
+                                       MappingName="OPCSR"
+                                       MinimumWidth="100" TextAlignment="Right">
+                        <syncfusion:GridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding OPCSR, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </syncfusion:GridTemplateColumn.CellTemplate>
+                    </syncfusion:GridTemplateColumn>
+
+                    <syncfusion:GridNumericColumn MappingName="ReplyWithoutComVolume" />
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
         </Grid>
 
         <!--  CommandBar Row  -->
         <Grid x:Name="BottomBar" Grid.Row="2">
             <CommandBar ClosedDisplayMode="Compact">
-                <AppBarButton Click="{x:Bind ViewModel.ExportToExcel}" Icon="Save" Label="Export to Excel file(.xls)" />
+                <AppBarButton Click="{x:Bind ViewModel.ExportToExcel}" Icon="Save" Label="Export to Excel file(.xlsx)" />
             </CommandBar>
         </Grid>
     </Grid>

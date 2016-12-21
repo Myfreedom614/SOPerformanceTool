@@ -327,7 +327,7 @@
                     <syncfusion:GridNumericColumn MappingName="Accepted" />
                     <syncfusion:GridTemplateColumn HeaderText="ReplySuccessRate"
                                        MappingName="ReplySuccess"
-                                       MinimumWidth="200" TextAlignment="Right">
+                                       MinimumWidth="100" TextAlignment="Right">
                         <syncfusion:GridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ReplySuccess, Converter={StaticResource DoubleToPercentageConverter}}" TextAlignment="Right" />
