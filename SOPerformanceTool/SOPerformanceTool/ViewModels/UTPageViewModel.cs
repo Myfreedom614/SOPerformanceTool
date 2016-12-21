@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SOPerformanceTool.Interfaces;
 using SOPerformanceTool.Models;
 using SOPerformanceTool.Utilities;
 using System;
@@ -18,7 +19,7 @@ namespace SOPerformanceTool.ViewModels
         private string APIBase = "/Api/performance/{0}?product={1}&startdate={2}&enddate={3}";
         public ObservableCollection<UTModel> UTData { get; set; }
 
-        public string PageHeader { get { return _Product.ToUpper() + " UT Performance"; } }
+        public string PageHeader { get { return _Product.ToUpper() + " UT Performance " + DateRangeInfo; } }
 
         string _Product = string.Empty;
         public string Product { get { return _Product; } set { Set(ref _Product, value); } }
@@ -38,6 +39,7 @@ namespace SOPerformanceTool.ViewModels
             get { return _BusyText; }
             set { Set(ref _BusyText, value); }
         }
+        public IView View { get; set; }
 
         public UTPageViewModel()
         {
@@ -59,8 +61,10 @@ namespace SOPerformanceTool.ViewModels
 
         private void ExportToExcelFile()
         {
-            var xlsExp = new ExcelExport<UTModel>(UTData);
-            xlsExp.ExportToFile(Product + "_ut_" + StartDateValue.Replace("/","") + "-" + EndDateValue.Replace("/", ""));
+            if (View == null) return;
+            View.ExportToExcelFile(Product + "_ut_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
+            //var xlsExp = new ExcelExport<UTModel>(UTData);
+            //xlsExp.ExportToFile(Product + "_ut_" + StartDateValue.Replace("/","") + "-" + EndDateValue.Replace("/", ""));
         }
 
         public void ShowBusy()

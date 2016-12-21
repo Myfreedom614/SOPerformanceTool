@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SOPerformanceTool.Interfaces;
+using SOPerformanceTool.Utilities;
+using SOPerformanceTool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +23,17 @@ namespace SOPerformanceTool.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UTPage : Page
+    public sealed partial class UTPage : Page, IView
     {
         public UTPage()
         {
             this.InitializeComponent();
+            (DataContext as UTPageViewModel).View = this as IView;
+        }
+
+        public void ExportToExcelFile(string fileName)
+        {
+            ExcelExportv2.ExportDataGridToExcel(this.dataGrid, fileName);
         }
     }
 }
