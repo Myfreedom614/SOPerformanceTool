@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SOPerformanceTool.Interfaces;
 using SOPerformanceTool.Models;
-using SOPerformanceTool.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
