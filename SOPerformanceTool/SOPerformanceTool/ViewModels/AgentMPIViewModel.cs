@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SOPerformanceTool.Interfaces;
 using SOPerformanceTool.Models;
 using SOPerformanceTool.Utilities;
 using System;
@@ -19,7 +20,7 @@ namespace SOPerformanceTool.ViewModels
         private string APIVersion; 
         public ObservableCollection<AgentMPIModel> AgentMPIData { get; set; }
 
-        public string PageHeader { get { return _Product.ToUpper() + " Agent MPI Performance"; } }
+        public string PageHeader { get { return _Product.ToUpper() + " Agent MPI Performance " + DateRangeInfo; } }
 
         string _Product = string.Empty;
         public string Product { get { return _Product; } set { Set(ref _Product, value); } }
@@ -48,6 +49,7 @@ namespace SOPerformanceTool.ViewModels
         {
             Views.Shell.SetBusy(false);
         }
+        public IView View { get; set; }
 
         public AgentMPIViewModel()
         {
@@ -70,8 +72,10 @@ namespace SOPerformanceTool.ViewModels
 
         private void ExportToExcelFile()
         {
-            var xlsExp = new ExcelExport<AgentMPIModel>(AgentMPIData);
-            xlsExp.ExportToFile(Product + "_agentmpi_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
+            if (View == null) return;
+            View.ExportToExcelFile(Product + "_agentmpi_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
+            //var xlsExp = new ExcelExport<AgentMPIModel>(AgentMPIData);
+            //xlsExp.ExportToFile(Product + "_agentmpi_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
         }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
