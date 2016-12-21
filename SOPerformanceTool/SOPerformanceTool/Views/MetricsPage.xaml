@@ -300,9 +300,9 @@
 
         <!--  header  -->
         <controls:PageHeader Frame="{x:Bind Frame}" Text="{x:Bind ViewModel.PageHeader}">
-            <!--<Interactivity:Interaction.Behaviors>
+            <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
-            </Interactivity:Interaction.Behaviors>-->
+            </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
 
         <!--  content  -->
