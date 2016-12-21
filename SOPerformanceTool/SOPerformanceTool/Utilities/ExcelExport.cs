@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Syncfusion.UI.Xaml.Grid;
+using Syncfusion.UI.Xaml.Grid.Converter;
+using Syncfusion.XlsIO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -6,6 +9,9 @@ using System.Text;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.UI;
+using Windows.UI.Popups;
+using Windows.UI.Xaml.Media;
 
 namespace SOPerformanceTool.Utilities
 {
@@ -135,6 +141,90 @@ namespace SOPerformanceTool.Utilities
                 output = '"' + output.Replace("\"", "\"\"") + '"';
 
             return output;
+        }
+    }
+    
+    public static class ExcelExportv2
+    {
+        /// <summary>
+        /// Method is export the SfDataGrid to Excel. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static async void ExportDataGridToExcel(SfDataGrid sfGrid, string fileName)
+        {
+            ExcelEngine excelEngine = null;
+            ExcelExportingOptions options = new ExcelExportingOptions()
+            {
+                AllowOutlining = true,
+                ExcelVersion = ExcelVersion.Excel2007,
+                ExportingEventHandler = exportingHandler,
+            };
+
+            options.CellsExportingEventHandler = CellExportingHandler;
+            excelEngine = sfGrid.ExportToExcel(sfGrid.View, options);
+
+            var workBook = excelEngine.Excel.Workbooks[0];
+
+            var savePicker = new FileSavePicker
+            {
+                SuggestedStartLocation = PickerLocationId.Desktop,
+                SuggestedFileName = fileName
+            };
+
+            if (workBook.Version == ExcelVersion.Excel97to2003)
+            {
+                savePicker.FileTypeChoices.Add("Excel File (.xls)", new List<string>() { ".xls" });
+            }
+            else
+            {
+                savePicker.FileTypeChoices.Add("Excel File (.xlsx)", new List<string>() { ".xlsx" });
+            }
+
+            var storageFile = await savePicker.PickSaveFileAsync();
+
+            if (storageFile != null)
+            {
+                await workBook.SaveAsAsync(storageFile);
+
+                var msgDialog = new MessageDialog("Do you want to view the Document?", "File has been created successfully.");
+
+                var yesCmd = new UICommand("Yes");
+                var noCmd = new UICommand("No");
+                msgDialog.Commands.Add(yesCmd);
+                msgDialog.Commands.Add(noCmd);
+                var cmd = await msgDialog.ShowAsync();
+                if (cmd == yesCmd)
+                {
+                    // Launch the saved file
+                    bool success = await Windows.System.Launcher.LaunchFileAsync(storageFile);
+                }
+            }
+            excelEngine.Dispose();
+        }
+
+        private static void CellExportingHandler(object sender, GridCellExcelExportingEventArgs args)
+        {
+            args.Range.CellStyle.Font.FontName = "Segoe UI";
+        }
+
+        private static void exportingHandler(object sender, GridExcelExportingEventArgs e)
+        {
+            if (e.CellType == ExportCellType.HeaderCell)
+            {
+                e.CellStyle.ForeGroundBrush = new SolidColorBrush(Colors.LightBlue);
+                e.CellStyle.FontInfo.Bold = true;
+            }
+            else if (e.CellType == ExportCellType.GroupCaptionCell)
+            {
+                e.CellStyle.ForeGroundBrush = new SolidColorBrush(Colors.LightYellow);
+            }
+            else if (e.CellType == ExportCellType.GroupSummaryCell)
+            {
+                e.CellStyle.BackGroundBrush = new SolidColorBrush(Colors.LightGray);
+            }
+            e.CellStyle.FontInfo.FontName = "Segoe UI";
+            e.Handled = true;
         }
     }
 }

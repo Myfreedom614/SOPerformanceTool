@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SOPerformanceTool.Interfaces;
 using SOPerformanceTool.Models;
 using SOPerformanceTool.Utilities;
 using System;
@@ -19,7 +20,7 @@ namespace SOPerformanceTool.ViewModels
         private string APIVersion; 
         public ObservableCollection<AnswerPointModel> AnswerPointData { get; set; }
 
-        public string PageHeader { get { return _Product.ToUpper() + " Answer/Points Performance"; } }
+        public string PageHeader { get { return _Product.ToUpper() + " Answer/Points Performance "+ DateRangeInfo; } }
 
         string _Product = string.Empty;
         public string Product { get { return _Product; } set { Set(ref _Product, value); } }
@@ -49,6 +50,8 @@ namespace SOPerformanceTool.ViewModels
             Views.Shell.SetBusy(false);
         }
 
+        public IView View { get; set; }
+
         public AnswerPointViewModel()
         {
             AnswerPointData = new ObservableCollection<AnswerPointModel>();
@@ -70,8 +73,10 @@ namespace SOPerformanceTool.ViewModels
 
         private void ExportToExcelFile()
         {
-            var xlsExp = new ExcelExport<AnswerPointModel>(AnswerPointData);
-            xlsExp.ExportToFile(Product + "_answerpoint_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
+            if (View == null) return;
+            View.ExportToExcelFile(Product + "_answerpoint_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
+            //var xlsExp = new ExcelExport<AnswerPointModel>(AnswerPointData);
+            //xlsExp.ExportToFile(Product + "_answerpoint_" + StartDateValue.Replace("/", "") + "-" + EndDateValue.Replace("/", ""));
         }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -94,7 +99,7 @@ namespace SOPerformanceTool.ViewModels
                 StartDateValue = Convert.ToDateTime(paras[1]).ToString("MM/dd/yyyy");
                 EndDateValue = Convert.ToDateTime(paras[2]).ToString("MM/dd/yyyy");
 
-                DateRangeInfo = string.Format("Showing data from {0} - {1}", StartDateValue, EndDateValue);
+                DateRangeInfo = string.Format("({0} - {1})", StartDateValue, EndDateValue);
             }
             var task = new Task(new Action(async () =>
             {
